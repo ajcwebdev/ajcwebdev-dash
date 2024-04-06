@@ -2,9 +2,10 @@
 
 import { client } from "./client.js"
 
+const { CONTRACT_ID } = process.env
+
 const retrieveContract = async () => {
-  const contractId = ''
-  return client.platform.contracts.get(contractId)
+  return client.platform.contracts.get(CONTRACT_ID)
 }
 
 retrieveContract()

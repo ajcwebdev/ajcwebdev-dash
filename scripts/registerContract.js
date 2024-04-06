@@ -11,24 +11,22 @@ const registerContract = async () => {
     note: {
       type: 'object',
       properties: {
-        message: { type: 'string', },
+        message: {
+          type: 'string',
+          "position": 0
+        },
       },
       additionalProperties: false,
     },
   }
   const contract = await platform.contracts.create(contractDocuments, identity)
   console.dir({ contract: contract.toJSON() })
-  const validationResult = await platform.dpp.dataContract.validate(contract)
-  if (validationResult.isValid()) {
-    console.log('Validation passed, broadcasting contract..')
-    // Sign and submit the data contract
-    return platform.contracts.publish(contract, identity)
-  }
-  console.error(validationResult) // An array of detailed validation errors
-  throw validationResult.errors[0]
+  // Sign and submit the data contract
+  await platform.contracts.publish(contract, identity)
+  return contract
 }
 
 registerContract()
-  .then((d) => console.log('Contract registered:\n', JSON.stringify(d.toJSON())))
+  .then((d) => console.log('Contract registered:\n', d.toJSON()))
   .catch((e) => console.error('Something went wrong:\n', e))
   .finally(() => client.disconnect())

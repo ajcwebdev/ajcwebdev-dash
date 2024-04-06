@@ -6,7 +6,7 @@ const { IDENTITY_ID } = process.env
 
 const topupIdentity = async () => {
   const { platform } = client
-  await platform.identities.topUp(IDENTITY_ID, 1000)
+  await platform.identities.topUp(IDENTITY_ID, 50000)
   return platform.identities.get(IDENTITY_ID)
 }
 
